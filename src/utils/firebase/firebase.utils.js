@@ -55,13 +55,9 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(catecoryCollectionRef); //returns a quaryeable snapshot of all documents in the cateory
 
   const querySnapShot = await getDocs(q);
-  const categoryMap = querySnapShot.docs.reduce((accumulator, docSnapshot) => {
-    const {title, items} = docSnapshot.data();
-    accumulator[title.toLowerCase()] = items;
-    return accumulator;
-  },{});
+  const categories = querySnapShot.docs.map((doc) => doc.data());
 
-  return categoryMap;
+  return categories;
 
 }
 
@@ -72,11 +68,9 @@ export const createUserDocumentFromAuth = async(
      //get the the document reference for specific user with uid :FeCthoM79qM3G0pYHJ6DLXBCW
   const userDocRef = doc(db, 'users', userAuth.uid);
 
-  console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
-  console.log(userSnapshot.exists());
+
   //if user does not exist, create da document
   if(!userSnapshot.exists()){
     const { displayName, email} = userAuth;
