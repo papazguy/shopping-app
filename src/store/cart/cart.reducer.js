@@ -1,30 +1,26 @@
-export const CATEGORY_ACTION_TYPES = {
-    SET_CARD_ITEMS: 'SET_CARD_ITEMS',
-    TOGGLE_CART : 'TOGGLE_CART'
-  }
+import CART_ACTION_TYPES from './cart.type'
+
 
   const INITIAL_STATE ={
     cartItems: [],
     isCartOpen: false,
-    cartItemCount: 0,
-    cartItemPrice: 0,
   }
 
   export const cartReducer = (state = INITIAL_STATE, action={}) => {
     const {type, payload} = action;
   
     switch (type) {
-      case CATEGORY_ACTION_TYPES.SET_CARD_ITEMS:
+      case CART_ACTION_TYPES.SET_CART_ITEMS:
         return {
           ...state,
-          ...payload,
+          cartItems: payload,
         }
-      case CATEGORY_ACTION_TYPES.TOGGLE_CART:
+      case CART_ACTION_TYPES.TOGGLE_CART:
         return {
           ...state,
           isCartOpen: payload
         }
         default:
-          throw state;
+          return state;
     }
   }
